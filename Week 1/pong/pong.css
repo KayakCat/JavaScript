@@ -1,7 +1,11 @@
 @charset "UTF-8";
   
+body {
+  background-color: #241d33;
+}
   canvas {
     border: 1px solid black;
+    background-color:aquamarine;
   }
   
  
