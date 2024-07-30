@@ -190,6 +190,6 @@ function increaseBallSpeed() {
 function resetBallSpeed() {
     ball.vx = originalSpeed.vx;
     ball.vy = originalSpeed.vy;
-    
+
     }
 
