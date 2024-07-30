@@ -7,31 +7,31 @@ var timer = setInterval(main, 1000 / 60);
 
 //global friction variable
 var fy = .97;
-
+const originalSpeed = {vx: -2, vy: -2}
 const players = [new Player("Player 1"), new Player("Player 2")];
 
+const pad = [new Box(), new Box()]; //paddle array
 
+let hitCount = 0;//variable for the hit count for increase ball speed function
 
 
 
 //p1 setup
-players[0].pad = new Box();
-players[0].pad.w = 20;
-players[0].pad.h = 150;
-players[0].pad.x = players[0].pad.w / 2;
-players[0].pad.color = 'orange';
+pad[0].w = 20;
+pad[0].h = 150;
+pad[0].x = pad[0].w / 2;
+pad[0].color = 'orange';
 //p2 setup
-players[1].pad = new Box();
-players[1].pad.w = 20;
-players[1].pad.h = 150;
-players[1].pad.x = c.width - players[1].pad.w / 2;
-players[1].pad.color = 'hotpink';
+pad[1].w = 20;
+pad[1].h = 150;
+pad[1].x = c.width - pad[1].w / 2;
+pad[1].color = 'hotpink';
 //ball setup
 var ball = new Box();
 ball.w = 20;
 ball.h = 20;
-ball.vx = -2;
-ball.vy = -2;
+ball.vx = originalSpeed.vx;
+ball.vy = originalSpeed.vy;
 ball.color = `black`;
 
 var particles = [];
@@ -55,46 +55,44 @@ function main() {
 
     //p1 accelerates when key is pressed 
     if (keys[`w`]) {
-        players[0].pad.vy -= players[0].pad.force;
+        pad[0].vy -= pad[0].force;
     }
-
     if (keys[`s`]) {
-        players[0].pad.vy += players[0].pad.force;
+        pad[0].vy += pad[0].force;
     }
 
     //p2 accelerates when key is pressed 
     if (keys[`o`]) {
-        players[1].pad.vy -= players[1].pad.force;
+        pad[1].vy -= pad[1].force;
     }
     if (keys[`l`]) {
-        players[1].pad.vy += players[1].pad.force;
+        pad[1].vy += pad[1].force;
     }
 
-    //applies friction
-    players[0].vy *= fy;
-    players[1].vy *= fy;
+    // Applies friction
+    pad[0].vy *= fy;
+    pad[1].vy *= fy;
 
-    //player movement
-    players[0].move();
-    players[1].move();
+    // Player movement
+    pad[0].move();
+    pad[1].move();
 
     //ball movement
     ball.move();
 
     //p1 collision
-    if (players[0].y < 0 + players[0].h / 2) {
-        players[1].y = 0 + players[1].h / 2;
+    if (pad[0].y < 0 + pad[0].h / 2) {
+        pad[0].y = 0 + pad[0].h / 2;
     }
-    if (players[0].y > c.height - players[0].h / 2) {
-        players[0].y = c.height - players[0].h / 2;
+    if (pad[0].y > c.height - pad[0].h / 2) {
+        pad[0].y = c.height - pad[0].h / 2;
     }
-
     //p2 collision
-    if (players[1].y < 0 + players[1].h / 2) {
-        players[1].y = 0 + players[1].h / 2;
+    if (pad[1].y < 0 + pad[1].h / 2) {
+        pad[1].y = 0 + pad[1].h / 2;
     }
-    if (players[1].y > c.height - players[1].h / 2) {
-        players[1].y = c.height - players[1].h / 2;
+    if (pad[1].y > c.height - pad[1].h / 2) {
+        pad[1].y = c.height - pad[1].h / 2;
     }
 
     //ball collision with left and right walls
@@ -102,11 +100,15 @@ function main() {
         ball.x = c.width / 2;
         ball.y = c.height / 2;
         ball.vx = -ball.vx; // Reverse direction
+        resetBallSpeed(); // Reset ball speed to original
+        hitCount = 0; // reset hit count when ball collides with the wall
     }
     if (ball.x > c.width) {
         ball.x = c.width / 2;
         ball.y = c.height / 2;
         ball.vx = -ball.vx; // Reverse direction
+        resetBallSpeed(); // Reset ball speed to original
+        hitCount = 0; // reset hit count when ball collides with wall
     }
     if (ball.y < 0) {
         ball.y = 0;
@@ -118,26 +120,32 @@ function main() {
     }
 
     //p1 with ball collision
-    if (ball.collide(players[0].pad)) {
-        ball.x = players[0].pad.x + players[0].pad.w / 2 + ball.w / 2;
+    if (ball.collide(pad[0])) {
+        ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, players[0].pad.color);
+        createParticles(ball.x, ball.y, pad[0].color);
         startScreenShake(10);
+        if (hitCount % 10 === 0) { // Every 10 hits the ball will move faster
+            increaseBallSpeed();
+        }
     }
 
     //p2 with ball collision
-    if (ball.collide(players[1].pad)) {
-        ball.x = players[1].pad.x - players[1].pad.w / 2 - ball.w / 2;
+    if (ball.collide(pad[1])) {
+        ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, players[1].pad.color);
+        createParticles(ball.x, ball.y, pad[1].color);
         startScreenShake(10);
+        if (hitCount % 10 === 0) { // Every 10 hits
+            increaseBallSpeed();
+        }    
     }
 
     // Apply screen shake before drawing the objects
     ctx.save();
     applyScreenShake();
-    players[0].draw();
-    players[1].draw();
+    pad[0].draw();
+    pad[1].draw();
     ball.draw();
     ctx.restore();
 }
@@ -173,3 +181,15 @@ function applyScreenShake() {
         shakeDuration--;
     }
 }
+//function to make the ball go faster after every ten hits
+function increaseBallSpeed() {
+    ball.vx *= 1.1; // Increase the horizontal speed by 10%
+    ball.vy *= 1.1; // Increase the vertical speed by 10%
+    }
+
+function resetBallSpeed() {
+    ball.vx = originalSpeed.vx;
+    ball.vy = originalSpeed.vy;
+    
+    }
+
