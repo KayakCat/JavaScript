@@ -18,7 +18,7 @@ const pad = [new Box(), new Box()]; //paddle array
 let hitCount = 0;//variable for the hit count for increase ball speed function
 let scores = [0,0] //score array for players 1 and 2
 
-
+const scoreBoard = document.querySelectorAll("#score > div")
 
 //p1 setup
 pad[0].w = 20;
@@ -109,6 +109,8 @@ function main() {
         ball.vx = -ball.vx; // Reverse direction
         resetBallSpeed(); // Reset ball speed to original speed
         hitCount = 0; // reset hit count when ball collides with the wall
+        console.log(`${scores[0]} | ${scores[1]}`);
+        
     }
     if (ball.x > c.width) {
         scores[0]++;//when the ball hits the right wall player 1 scores
@@ -117,6 +119,7 @@ function main() {
         ball.vx = -ball.vx; // Reverse direction
         resetBallSpeed(); // Reset ball speed to original speed
         hitCount = 0; // reset hit count when ball collides with wall
+        console.log(`${scores[0]} | ${scores[1]}`);
     }
     if (ball.y < 0) {
         ball.y = 0;
@@ -157,7 +160,12 @@ function main() {
     ball.draw();
     ctx.restore();
 
-    console.log(`${scores[0]} | ${scores[1]}`);//console log scores with pipe down the middle
+    for (let i = 0; i < scoreBoard.length; i++) {
+        scoreBoard[i].innerText = scores[i];
+    }
+
+    
+
 } 
 //******************************FUNCTIONS*******************************************
 // Function to get a random color
@@ -168,6 +176,7 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+
 }
 
 // Function to create particles
