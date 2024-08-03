@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Form</title>
+</head>
+<body>
+    <form>
+        <input type="range" min="0" max="255"><input type="number">
+        <input type="range" min="0" max="255"><input type="number">
+        <input type="range" min="0" max="255"><input type="number">
+        
+        <script>
+
+            var slider = Array.from(document.querySelector(`input[type="range"]`));
+            var slider = Array.from(document.querySelector(`input[type="number"]`));
+           
+           
+
+            slider.forEach((i)=>{
+                i.addEventListener(`input`, (e)=>{
+                update()
+
+                })
+            })
+
+            slider.forEach((i,num)=>{
+                i.addEventListener(`input`,(e)=>{
+                    number[num].value = i.value
+                })
+            })
+
+            function update(tag=`body`)
+            {
+                document.querySelector(tag).style.backgroundColor = `rgb(${slider[0].value}, ${slider[1].value}, ${slider[2].value})`
+            }
+
+            function add(obj={a:10, b:10})
+            {
+                return obj.a + obj.b;
+            }
+
+            alert(add({b:5}))
+
+            var person {
+                first: `unknown`
+                last: `
+            }
+
+            var input = 
+            
+        </script>
+    </form>
+</body>
+</html>

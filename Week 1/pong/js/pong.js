@@ -1,3 +1,6 @@
+
+//*******************************VARIABLE SECTION*************************
+
 //canvas and context
 var c = document.querySelector(`#pong`);
 var ctx = c.getContext(`2d`);
@@ -7,12 +10,13 @@ var timer = setInterval(main, 1000 / 60);
 
 //global friction variable
 var fy = .97;
-const originalSpeed = {vx: -2, vy: -2}
-const players = [new Player("Player 1"), new Player("Player 2")];
+const originalSpeed = {vx: -2, vy: -2}//set the original speed of the ball
+const players = [new Player("Player 1"), new Player("Player 2")];//players array
 
 const pad = [new Box(), new Box()]; //paddle array
 
 let hitCount = 0;//variable for the hit count for increase ball speed function
+let scores = [0,0] //score array for players 1 and 2
 
 
 
@@ -40,6 +44,8 @@ var particles = [];
 var shakeDuration = 0;
 var shakeMagnitude = 5;
 
+
+//*********************************MAIN PROGRAM********************************
 function main() {
     //erases the canvas
     ctx.clearRect(0, 0, c.width, c.height);
@@ -97,17 +103,19 @@ function main() {
 
     //ball collision with left and right walls
     if (ball.x < 0) {
+        scores[1]++;//when the ball hits the left wall the player 2 scores
         ball.x = c.width / 2;
         ball.y = c.height / 2;
         ball.vx = -ball.vx; // Reverse direction
-        resetBallSpeed(); // Reset ball speed to original
+        resetBallSpeed(); // Reset ball speed to original speed
         hitCount = 0; // reset hit count when ball collides with the wall
     }
     if (ball.x > c.width) {
+        scores[0]++;//when the ball hits the right wall player 1 scores
         ball.x = c.width / 2;
         ball.y = c.height / 2;
         ball.vx = -ball.vx; // Reverse direction
-        resetBallSpeed(); // Reset ball speed to original
+        resetBallSpeed(); // Reset ball speed to original speed
         hitCount = 0; // reset hit count when ball collides with wall
     }
     if (ball.y < 0) {
@@ -123,8 +131,8 @@ function main() {
     if (ball.collide(pad[0])) {
         ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
         ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, pad[0].color);
-        startScreenShake(10);
+        createParticles(ball.x, ball.y, pad[0].color);//particles fly out on impact with paddle
+        startScreenShake(10); //screen shake when ball makes impact with paddle
         if (hitCount % 10 === 0) { // Every 10 hits the ball will move faster
             increaseBallSpeed();
         }
@@ -134,9 +142,9 @@ function main() {
     if (ball.collide(pad[1])) {
         ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
         ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, pad[1].color);
-        startScreenShake(10);
-        if (hitCount % 10 === 0) { // Every 10 hits
+        createParticles(ball.x, ball.y, pad[1].color);//particles fly out on impact with paddle
+        startScreenShake(10);//screen shake when ball makes impact with paddle
+        if (hitCount % 10 === 0) { // every ten hits the ball will move faster
             increaseBallSpeed();
         }    
     }
@@ -148,8 +156,10 @@ function main() {
     pad[1].draw();
     ball.draw();
     ctx.restore();
-}
 
+    console.log(`${scores[0]} | ${scores[1]}`);//console log scores with pipe down the middle
+} 
+//******************************FUNCTIONS*******************************************
 // Function to get a random color
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -187,7 +197,7 @@ function increaseBallSpeed() {
     ball.vy *= 1.1; // Increase the vertical speed by 10%
     }
 
-function resetBallSpeed() {
+function resetBallSpeed() { //reset ball speed when the ball hits the canvas
     ball.vx = originalSpeed.vx;
     ball.vy = originalSpeed.vy;
 
