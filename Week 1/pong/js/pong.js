@@ -30,6 +30,7 @@ pad[1].w = 20;
 pad[1].h = 150;
 pad[1].x = c.width - pad[1].w / 2;
 pad[1].color = 'hotpink';
+pad[1].dir = -1
 //ball setup
 var ball = new Box();
 ball.w = 20;
@@ -59,6 +60,8 @@ function main() {
         }
     });
 
+     
+
     //p1 accelerates when key is pressed 
     if (keys[`w`]) {
         pad[0].vy -= pad[0].force;
@@ -75,31 +78,13 @@ function main() {
         pad[1].vy += pad[1].force;
     }
 
-    // Applies friction
-    pad[0].vy *= fy;
-    pad[1].vy *= fy;
 
-    // Player movement
-    pad[0].move();
-    pad[1].move();
 
+
+   
     //ball movement
     ball.move();
 
-    //p1 collision
-    if (pad[0].y < 0 + pad[0].h / 2) {
-        pad[0].y = 0 + pad[0].h / 2;
-    }
-    if (pad[0].y > c.height - pad[0].h / 2) {
-        pad[0].y = c.height - pad[0].h / 2;
-    }
-    //p2 collision
-    if (pad[1].y < 0 + pad[1].h / 2) {
-        pad[1].y = 0 + pad[1].h / 2;
-    }
-    if (pad[1].y > c.height - pad[1].h / 2) {
-        pad[1].y = c.height - pad[1].h / 2;
-    }
 
     //ball collision with left and right walls
     if (ball.x < 0) {
@@ -130,45 +115,43 @@ function main() {
         ball.vy = -ball.vy;
     }
 
-    //p1 with ball collision
-    if (ball.collide(pad[0])) {
-        ball.x = pad[0].x + pad[0].w / 2 + ball.w / 2;
-        ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, pad[0].color);//particles fly out on impact with paddle
-        startScreenShake(10); //screen shake when ball makes impact with paddle
-        if (hitCount % 10 === 0) { // Every 10 hits the ball will move faster
-            increaseBallSpeed();
-        }
-    }
 
-    //p2 with ball collision
-    if (ball.collide(pad[1])) {
-        ball.x = pad[1].x - pad[1].w / 2 - ball.w / 2;
-        ball.vx = -ball.vx;
-        createParticles(ball.x, ball.y, pad[1].color);//particles fly out on impact with paddle
-        startScreenShake(10);//screen shake when ball makes impact with paddle
-        if (hitCount % 10 === 0) { // every ten hits the ball will move faster
-            increaseBallSpeed();
-        }    
-    }
-
-    // Apply screen shake before drawing the objects
+    // Apply screen shake before drawing the objects - cleanup??? ask jay
     ctx.save();
     applyScreenShake();
-    pad[0].draw();
-    pad[1].draw();
     ball.draw();
     ctx.restore();
 
     for (let i = 0; i < scoreBoard.length; i++) {
+        pad[i].vy *= fy;
+        pad[i].move();
+        if (pad[i].y < 0 + pad[i].h / 2) {
+            pad[i].y = 0 + pad[i].h / 2;
+        }
+        if (pad[i].y > c.height - pad[i].h / 2) {
+            pad[i].y = c.height - pad[i].h / 2;
+        }
+
+        if (ball.collide(pad[i])) {
+            ball.x = pad[i].x + (pad[i].w / 2 + ball.w / 2) * pad[i].dir;
+            ball.vx = -ball.vx;
+            createParticles(ball.x, ball.y, pad[i].color);//particles fly out on impact with paddle
+            startScreenShake(10); //screen shake when ball makes impact with paddle
+            if (hitCount % 10 === 0) { // Every 10 hits the ball will move faster
+                increaseBallSpeed();
+            }
+    
+        }
+        pad[i].draw();
         scoreBoard[i].innerText = scores[i];
+
     }
 
     
 
 } 
 //******************************FUNCTIONS*******************************************
-// Function to get a random color
+// Function to get a random color - haven't used this yet but really want to!!!
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -211,4 +194,5 @@ function resetBallSpeed() { //reset ball speed when the ball hits the canvas
     ball.vy = originalSpeed.vy;
 
     }
+
 

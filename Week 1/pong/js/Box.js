@@ -14,6 +14,7 @@ class Box {
         this.vy = 0;
         // Define the force that can be applied to the box
         this.force = 1;
+        this.dir = 1
     }
 
     // Draw the box on the canvas

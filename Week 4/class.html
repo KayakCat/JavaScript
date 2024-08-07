@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <select>
+        <option>black</option>
+        <option>white</option>
+
+    </select>
+    <input type="color">
+    <button>Save</button>
+    <button>Clear</button>
+    <script>
+        var option = document.querySelector(`select`)
+        var body = document.querySelector(`body`)
+        var h1 = document.querySelector(`h1`)
+        var h1 = document.querySelector(`h1`)
+
+        if(typeof(Storage)!==undefined)
+        {
+            body.style.backgroundColor = localStorage.getItem(`background`)
+        }
+        else
+        {
+            localStorage.setItem(`background`, options.value)
+            body.style.backgroundColor = localStorage.getItem(`background`);
+        }
+
+        buttons[0].addEventListener(`input`, e=>{
+
+        localStorage.setItem(`background`, options.value)
+
+        console.log(options.value)
+
+        body.style.backgroundColor = options.value;
+
+    })
+    </script>
+    
+</body>
+</html>
