@@ -1,23 +1,11 @@
-/*--------
-    Make the Options Button 
-    . on click
-    . show or hide the `.sides` div
----------*/
+
 //select the option sections heading 2(h2), add click event to it and make the sides div show and hide by using classlist.toggle()
 document.querySelector('h2').addEventListener('click', function() {
     document.querySelector('.sides').classList.toggle('hidden');
 });
 
-/*---------
-    Program the two fill inputs to do the following:
-    . Display the correct colors on the inputs and outputs and paddles    
-    . using an `input` event
-        . Change the player's fill property to the value of the input
-        . Change the pad's fill property  to the player's fill property
-        . Show the fill's hex code in the output div 
 
------------*/
-//
+//fill paddles
 document.addEventListener('DOMContentLoaded', () => {
     const fillIn = document.querySelectorAll('input.fill');
     const outPut = document.querySelectorAll('.output');
@@ -41,40 +29,88 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// change stroke color
+document.addEventListener('DOMContentLoaded', () => {
+    const strokeIn = document.querySelectorAll('input.stroke');
+    const outPut = document.querySelectorAll('.output');
+
+    strokeIn.forEach((input, index) => {
+        // starting value of stroke
+        input.value = player[index].stroke;
+        // Display the initial stroke color in the output div
+        outPut[(index * 3) + 1].textContent = player[index].stroke; // Adjust the index based on output arrangement
+
+        // event listener for player input
+        input.addEventListener('input', (event) => {
+            const color = event.target.value;
+
+            // Update the stroke based on player input
+            player[index].stroke = color;
+
+            // Update the stroke on the paddle
+            pad[index].stroke = color;
+
+            // hex display to show color the player selected
+            outPut[(index * 3) + 1].textContent = color;
+
+            // draw the the paddle with the new stroke color
+            pad[index].draw();
+        });
+   });
+
+});
 
 
-/*---------
-    Program the six key inputs to do the following:
-    . Display the correct key names for each player   
-    . using a `keydown` event
-        .Display the correct key name in the input
-        .Change the player's key to the value of the input
-        .Show the player's key in the output div 
------------*/
 
 document.addEventListener('DOMContentLoaded', () => {
     const upInputs = document.querySelectorAll('input.u');
-    const upOutputs = document.querySelectorAll('.output');
+    const downInputs = document.querySelectorAll('input.d');
+    const straightInputs = document.querySelectorAll('input.s');
+    const keyOutputs = document.querySelectorAll('.output');
 
+    // up inputs set initial value, display the initial up value
     upInputs.forEach((input, index) => {
-        // Set initial value of the input to the current player's 'u' key
         input.value = player[index].keys.u;
-        // Display the initial key in the output div
-        upOutputs[index].textContent = player[index].keys.u;
-
-        // Add a keydown event listener to update the input and output
+        keyOutputs[index * 6].textContent = player[index].keys.u;
+        //event listener for key presses
         input.addEventListener('keydown', (event) => {
-            // Update the input value to the key pressed
             input.value = event.key;
-
-            // Update the player's 'u' key property
             player[index].keys.u = event.key;
-
-            // Display the key name in the output div
-            upOutputs[index].textContent = event.key;
+            keyOutputs[index * 6].textContent = event.key;
         });
+        //event listener to pause when changing key letter
+        input.addEventListener('focus', () => {
+            currentState = 'pause';
+        });
+    });
 
-        // Add a focus event listener to pause the game
+    // down inputs set initial value, display the initial up value
+    downInputs.forEach((input, index) => {
+        input.value = player[index].keys.d;
+        keyOutputs[index * 6 + 1].textContent = player[index].keys.d;
+        //event listener for key presses
+        input.addEventListener('keydown', (event) => {
+            input.value = event.key;
+            player[index].keys.d = event.key;
+            keyOutputs[index * 6 + 1].textContent = event.key;
+        });
+        //event listener to pause when changing key letter
+        input.addEventListener('focus', () => {
+            currentState = 'pause';
+        });
+    });
+
+    // straight inputs set initial value, display the initial up value
+    straightInputs.forEach((input, index) => {
+        input.value = player[index].keys.s;
+        keyOutputs[index * 6 + 2].textContent = player[index].keys.s;
+        //event listener for key presses
+        input.addEventListener('keydown', (event) => {
+            input.value = event.key;
+            player[index].keys.s = event.key;
+            keyOutputs[index * 6 + 2].textContent = event.key;
+        });
+        //event listener to pause when changing key letter
         input.addEventListener('focus', () => {
             currentState = 'pause';
         });
