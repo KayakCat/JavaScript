@@ -17,28 +17,31 @@ document.querySelector('h2').addEventListener('click', function() {
         . Show the fill's hex code in the output div 
 
 -----------*/
+//
 document.addEventListener('DOMContentLoaded', () => {
     const fillIn = document.querySelectorAll('input.fill');
     const outPut = document.querySelectorAll('.output');
 
     fillIn.forEach((input, index) => {
         input.addEventListener('input', (event) => {
-            const color = event.target.value;
+            const color = event.target.value;//get the color from player input
 
-            // Update the player's fill property
+            // Update the players fill color
             player[index].fill = color;
 
-            // Update the paddle's fill property
+            // update the paddles fill color
             pad[index].fill = color;
 
-            // Update the display for the color hex code
+            // update the hex code display
             outPut[index * 2].textContent = color;
 
-            // Optionally, update the paddle color directly
-            pad[index].draw(); // Assuming `draw` method updates the visual appearance
+            // update paddle color
+            pad[index].draw(); 
         });
     });
 });
+
+
 
 /*---------
     Program the six key inputs to do the following:
