@@ -53,38 +53,33 @@ document.addEventListener('DOMContentLoaded', () => {
 -----------*/
 
 document.addEventListener('DOMContentLoaded', () => {
-    const keyInputs = document.querySelectorAll('input.u, input.d, input.s');
-    const keyOutputs = document.querySelectorAll('.output');
+    const upInputs = document.querySelectorAll('input.u');
+    const upOutputs = document.querySelectorAll('.output');
 
-    // Update key properties and display key names when inputs change
-    keyInputs.forEach((input, index) => {
-        input.addEventListener('input', (event) => {
-            const keyName = event.target.value;
-            const playerIndex = Math.floor(index / 3); // Determine which player (0 or 1)
-            const keyType = ['u', 'd', 's'][index % 3]; // Determine key type (up, down, straight)
-            
-            // Update the player's key property
-            player[playerIndex].keys[keyType] = keyName;
+    upInputs.forEach((input, index) => {
+        // Set initial value of the input to the current player's 'u' key
+        input.value = player[index].keys.u;
+        // Display the initial key in the output div
+        upOutputs[index].textContent = player[index].keys.u;
+
+        // Add a keydown event listener to update the input and output
+        input.addEventListener('keydown', (event) => {
+            // Update the input value to the key pressed
+            input.value = event.key;
+
+            // Update the player's 'u' key property
+            player[index].keys.u = event.key;
 
             // Display the key name in the output div
-            keyOutputs[index].textContent = keyName;
+            upOutputs[index].textContent = event.key;
         });
-    });
 
-    // Optional: Add keydown event listener to update inputs with actual keys
-    document.addEventListener('keydown', (event) => {
-        keyInputs.forEach((input, index) => {
-            if (event.code === player[Math.floor(index / 3)].keys[['u', 'd', 's'][index % 3]]) {
-                input.value = event.key;
-                const playerIndex = Math.floor(index / 3); // Determine which player (0 or 1)
-                const keyType = ['u', 'd', 's'][index % 3]; // Determine key type (up, down, straight)
-                
-                // Update the player's key property
-                player[playerIndex].keys[keyType] = event.key;
-
-                // Display the key name in the output div
-                keyOutputs[index].textContent = event.key;
-            }
+        // Add a focus event listener to pause the game
+        input.addEventListener('focus', () => {
+            currentState = 'pause';
         });
     });
 });
+
+
+       
