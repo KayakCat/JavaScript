@@ -6,6 +6,7 @@ var o = [];
 var pad = [];
 var g = [];
 var goals = [];
+var particles = [];
 var sides = {
         top: c.height/2 + (c.height/2 * -1), 
         right: c.width/2 + (c.width/2 * 1), 
@@ -25,9 +26,12 @@ init();
 //Main Game Loop
 function main()
 {
+    
     //erases the canvas
     ctx.clearRect(0,0,c.width,c.height);
     states[currentState]();
+
+    
 }
 
 function init()

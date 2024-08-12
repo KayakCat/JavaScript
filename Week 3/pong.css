@@ -1,50 +1,82 @@
 @charset "UTF-8";
-html{height:100%;}
-body{
-    min-height:100%; 
-    margin:0;
-    display:flex; 
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%; 
+    margin: 0;
+    display: flex; 
     justify-content: center;
     background-color: rgb(0,0,0);
-}
-main{
-    color:white;
-    display:flex;
+    color: white; /* Default text color for dark mode */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
-#score{
-    display:flex;
+/* Light Mode Styles */
+.light-mode {
+    background-color: rgb(255, 255, 255);
+    color: black; /* Default text color for light mode */
+}
+
+.light-mode canvas {
+    border: 1px solid black;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: rgb(0, 0, 0);
+    color: white; /* Default text color for dark mode */
+}
+
+.dark-mode canvas {
+    border: 1px solid white;
+}
+
+main {
+    color: inherit; /* Inherit color from body */
+    display: flex;
+}
+
+#score {
+    display: flex;
     justify-content: space-between;
-    height:50px;
-}
-#score div{
-    position:relative;
-}
-#score div p{
-    position:absolute;
-}
-#score div:last-child p{
-    text-align: right;
-    right:0px;
-}
-canvas{
-    border:1px solid rgb(255,255,255);
-}
-#options{
-    margin-left:24px;
-}
-#options h2{
-    cursor:pointer;
+    height: 50px;
 }
 
-.hidden{
-    height:0;
-    overflow-y:hidden;
+#score div {
+    position: relative;
 }
-.op{
+
+#score div p {
+    position: absolute;
+}
+
+#score div:last-child p {
+    text-align: right;
+    right: 0px;
+}
+
+canvas {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+#options {
+    margin-left: 24px;
+}
+
+#options h2 {
+    cursor: pointer;
+}
+
+.hidden {
+    height: 0;
+    overflow-y: hidden;
+}
+
+.op {
     width: 400px;
-    color:#ffffff;
-    display:grid;
+    color: inherit; /* Inherit text color from body */
+    display: grid;
     grid-template-columns: auto auto auto;
-    
 }
