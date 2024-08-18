@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PONG</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pong.css">
+</head>
+<body>
+    <nav><a href="index.html">HOME</a></nav>
+    <main>
+
+     <!--Dark and light mode Toggle Switch-->
+        <section id="theme-toggle" class="toggle-container">
+            <label for="theme-switch">Dark Mode</label>
+            <input type="checkbox" id="theme-switch">
+        </section>
+
+        <section id="game">
+            <div id="score">
+                <div>
+                    <p class="score">0</p>
+                    <!--<p class="anim">0</p>-->
+                </div>
+                <div>
+                    <p class="score">0</p>
+                    <!--<p class="anim">0</p>-->
+                </div>
+            </div>
+            <canvas id="pong" width="800" height="800"></canvas>
+        </section>
+        <section id="options"></div>
+            <h2>Options</h2>
+            <div class="sides">
+    <div class="op">
+        <h2>Player 1</h2>
+        <div></div>
+        <div></div>
+        
+        <label for="player1-fill">FILL</label>
+        <input id="player1-fill" class="fill" type="color" name="player1-fill">
+        <div class="output"></div>
+        
+        <label for="player1-stroke">STROKE</label>
+        <input id="player1-stroke" class="stroke" type="color" name="player1-stroke">
+        <div class="output"></div>
+        
+        <label for="player1-up">UP</label>
+        <input id="player1-up" class="u" type="text" maxlength="1" name="player1-up">
+        <div class="output"></div>
+        
+        <label for="player1-down">DOWN</label>
+        <input id="player1-down" class="d" type="text" maxlength="1" name="player1-down">
+        <div class="output"></div>
+        
+        <label for="player1-straight">STRAIGHT</label>
+        <input id="player1-straight" class="s" type="text" maxlength="1" name="player1-straight">
+        <div class="output"></div>
+    </div>
+    <div class="op">
+        <h2>Player 2</h2>
+        <div></div>
+        <div class="output"></div>
+        
+        <label for="player2-fill">FILL</label>
+        <input id="player2-fill" class="fill" type="color" name="player2-fill">
+        <div class="output"></div>
+        
+        <label for="player2-stroke">STROKE</label>
+        <input id="player2-stroke" class="stroke" type="color" name="player2-stroke">
+        <div class="output"></div>
+        
+        <label for="player2-up">UP</label>
+        <input id="player2-up" class="u" type="text" maxlength="1" name="player2-up">
+        <div class="output"></div>
+        
+        <label for="player2-down">DOWN</label>
+        <input id="player2-down" class="d" type="text" maxlength="1" name="player2-down">
+        <div class="output"></div>
+        
+        <label for="player2-straight">STRAIGHT</label>
+        <input id="player2-straight" class="s" type="text" maxlength="1" name="player2-straight">
+        <div class="output"></div>
+    </div>
+</div>
+
+            
+            </div>
+        </section>
+    </main>
+    <script src="js/User.js"></script>
+    <script src="js/Box.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/pong.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/theme.js"></script>
+   
+</body>
+</html>
