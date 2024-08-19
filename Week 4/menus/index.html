@@ -17,9 +17,9 @@
             <div id="menus">
             <!-- This is what your final HTML will look like.
                 <div id="start-options">
-                    <button data-load="false">New Game</button> NOTE: Will redirect to lobby.html and send load=false
-                    <button data-load="true">Continue</button> NOTE: Will redirect to lobby.html and send load=true
-                    <button>High Scores</button> NOTE: Will redirect to hs.html
+                    <button data-load="false">New Game</button>
+                    <button data-load="true">Continue</button>
+                    <button id="high-scores">High Scores</button>
                 </div>
             -->
             </div>
@@ -33,78 +33,76 @@
     <script src="js/options.js"></script>
     <script src="js/theme.js"></script>
     <script>
-    $(document).ready(function() {
-        var $menus = $('#menus');
+    var $menus = $(`#menus`);
 
-        // Loading icon code
-        const $loadDiv = $('<div id="load"></div>');
-        $menus.append($loadDiv);
+// Loading icon code
+const $loadDiv = $('<div id="load"></div>');
+$menus.append($loadDiv);
 
-        // Function to create and display the start menu
-        function createStartMenu() {
-            const $startMenu = $('<div id="start"></div>');
-            $startMenu.css('opacity', '0');
+// Function to create and display the start menu
+function createStartMenu() {
+    const $startMenu = $('<div id="start"></div>');
+    $startMenu.css('opacity', '0');
 
-            const $startButton = $('<button id="start-button">Start</button>');
-            $startMenu.append($startButton);
+    const $startButton = $('<button id="start-button">Start</button>');
+    $startMenu.append($startButton);
 
-            $menus.append($startMenu);
+    $menus.append($startMenu);
 
-            // Animate the start menu
-            $startMenu.animate({ opacity: 1 }, 2000);
-                    
-            $startButton.click(function() {
-                loadNewMenu();
-            });
-        }
-
-        // Function to create and display the new menu
-        function loadNewMenu() {
-            const $startMenu = $('#start');
-
-            if ($startMenu.length) {
-                $startMenu.animate({ opacity: 0 }, 1000, function() {
-                    $startMenu.remove(); // Remove the start menu
-
-                    // Create and display the new menu
-                    const $newMenu = $('<div id="new-menu"></div>');
-                    $newMenu.html(`
-                        <button data-load="false">New Game</button>
-                        <button data-load="true">Continue</button>
-                        <button id="high-scores">High Scores</button>
-                    `);
-                    
-                    $menus.append($newMenu);
-
-                    $newMenu.css({ opacity: 0 }).animate({ opacity: 1 }, 2000);
-
-                    // Add event listeners for the new buttons
-                    $newMenu.find('[data-load="false"]').click(function() {
-                        window.location.href = 'lobby.html?load=false';
-                    });
-
-                    $newMenu.find('[data-load="true"]').click(function() {
-                        window.location.href = 'lobby.html?load=true';
-                    });
-
-                    $newMenu.find('#high-scores').click(function() {
-                        window.location.href = 'hs.html';
-                    });
-                });
-            }
-        }
-
-        // Initialize the loading screen and start menu
-        function loadStartMenu() {
-            $loadDiv.animate({ opacity: 0 }, 2000, function() {
-                $loadDiv.remove();
-                createStartMenu();
-            });
-        }
-
-        // Start the loading process after 1 second
-        setTimeout(loadStartMenu, 1000);
+    // Animate the start menu
+    $startMenu.animate({ opacity: 1 }, 2000);
+                
+    $startButton.click(function() {
+        loadNewMenu();
     });
+}
+
+// Function to create and display the new menu
+function loadNewMenu() {
+    const $startMenu = $('#start');
+
+    if ($startMenu.length) {
+        $startMenu.animate({ opacity: 0 }, 1000, function() {
+            $startMenu.remove(); // Remove the start menu
+
+            // Create and display the new menu
+            const $newMenu = $('<div id="new-menu"></div>');
+            $newMenu.html(`
+                <button data-load="false">New Game</button>
+                <button data-load="true">Continue</button>
+                <button id="high-scores">High Scores</button>
+            `);
+            
+            $menus.append($newMenu);
+
+            $newMenu.css({ opacity: 0 }).animate({ opacity: 1 }, 2000);
+
+            // Add click event listeners for the new buttons
+            $newMenu.find('[data-load="false"]').click(function(e) {
+                window.location.href = `lobby.html?load=${e.target.dataset.load}`;
+            });
+
+            $newMenu.find('[data-load="true"]').click(function(e) {
+                window.location.href = `lobby.html?load=${e.target.dataset.load}`;
+            });
+
+            $newMenu.find('#high-scores').click(function() {
+                window.location.href = 'hs.html';
+            });
+        });
+    }
+}
+
+// Initialize the loading screen and start menu
+function loadStartMenu() {
+    $loadDiv.animate({ opacity: 0 }, 2000, function() {
+        $loadDiv.remove();
+        createStartMenu();
+    });
+}
+
+// Start the loading process after 1 second
+setTimeout(loadStartMenu, 1000);
     </script>
 </body>
 </html>
