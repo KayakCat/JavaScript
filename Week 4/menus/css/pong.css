@@ -30,7 +30,8 @@ canvas{
 }
 .op{
     width: 400px;
-    color:#ffffff;
+    color:#dc09c0;
     display:grid;
     grid-template-columns: auto auto auto; 
 }
+

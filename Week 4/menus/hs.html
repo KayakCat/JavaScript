@@ -28,25 +28,25 @@
     </main>
     <script>
         var highScoreList = [
-            {name:`aaa`, score:1000},
-            {name:`bbb`, score:980}
+            {name:`Mr. T`, score:1000},
+            {name:`Jason Vorhees`, score:980}
         ]
+
+        //high score container
+        var highScoresDiv = document.createElement(`div`);
+        highScoresDiv.id = `high-scores`;
+
+        //high scores loop
+        highScoreList.forEach(function(score) {
+            var scoreDiv = document.createElement(`div`);
+            scoreDiv.className = `score`
+            scoreDiv.innerHTML = `${score.name}: ${score.score}`;
+            highScoresDiv.appendChild(scoreDiv)
+        });
         
         //
-        var menus = document.querySelector(`#menus`);
+        document.querySelector(`#menus`).appendChild(highScoresDiv);
 
-        
-       
-
-     
-
-
-
-      
-        
-
-
-        
 
     </script>
 </body>
