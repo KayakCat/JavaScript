@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif; /* Set the font of the page */
+    background-color: orange;
+}
+.container {
+    padding: 20px; /* Add some padding around the container */
+}
+button {
+    margin: 10px; /* Add space between buttons */
+    padding: 10px; /* Add padding inside buttons for a better look */
+    cursor: pointer; /* Show pointer when hovering over buttons */
+    color: green;
+}

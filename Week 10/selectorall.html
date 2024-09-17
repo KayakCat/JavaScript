@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query Selector All Example</title>
+</head>
+<body>
+    <h1 id="main-title">Main Title</h1>
+    <p class="text">This is the first paragraph.</p>
+    <p class="text">This is the second paragraph.</p>
+
+    <script>
+        // Selects all elements with the class 'text'
+        const paragraphs = document.querySelectorAll('.text');
+        
+        // Loop through the NodeList and log each paragraph's content
+        paragraphs.forEach(paragraph => {
+            console.log(paragraph.textContent);
+        });
+
+        // Output:
+        // this is the first paragraph.
+        // this is the second paragraph.
+    </script>
+</body>
+</html>

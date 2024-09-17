@@ -52,6 +52,7 @@ app.post('/jeep', async (req, res) => {
 
 app.post('/delete', async (req, res) => { 
   //add the delete functionality here.
+  
   //read in the jeep.json file
   //splice out the correct index from the array
   //write the file again

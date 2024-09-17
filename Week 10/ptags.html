@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Some P Tags</title>
+</head>
+<body>
+    <!-- button that will start the creation of p tags -->
+    <button id="startButton">Start</button>
+    
+    <!-- container where the p tags will be inserted -->
+    <div id="container"></div>
+
+    <script>
+        // Add an event listener to the start button
+        document.getElementById('startButton').addEventListener('click', function() {
+            // get the container where the paragraphs will be inserted
+            const container = document.getElementById('container');
+            
+            // clear any existing content in the container
+            container.innerHTML = '';
+        
+            // create the p tags
+            for (let i = 1; i <= 7; i++) {
+                // create a new p element
+                const p = document.createElement('p');
+                
+                // set text content of p element
+                p.textContent = `Paragraph numero ${i}`;
+                
+                // this is an option to assign an id to each p element 
+                p.id = `p${i}`;
+                
+                // append the p element to the container
+                container.appendChild(p);
+            }
+        
+            // get all the p elements that are in the container
+            const paragraphs = container.getElementsByTagName('p');
+            
+            // loop through each p element to log in the console
+            for (const p of paragraphs) {
+                console.log(p.textContent);
+            }
+        });
+    </script>
+</body>
+</html>

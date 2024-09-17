@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>innerHTML Example</title>
+</head>
+<body>
+    <div id="content">Old content</div>
+    <button id="updateButton">Update Content</button>
+
+    <script>
+        document.getElementById('updateButton').addEventListener('click', function() {
+            document.getElementById('content').innerHTML = 'New content';//clicking the update button changes the content of the <div> with the id content to new content
+        });
+    </script>
+</body>
+</html>
+<!-- the innerHTML property allows you to get or set the HTML content inside an element. It can be used to dynamically update the content of an element-->

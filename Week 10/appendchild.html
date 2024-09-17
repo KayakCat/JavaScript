@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>appendChild Example</title>
+</head>
+<body>
+    <!-- Unordered list to which new items will be added -->
+    <ul id="myList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+    
+    <!-- Button to add a new list item -->
+    <button id="addButton">Add Item</button>
+
+    <script>
+        // Add an event listener to the button
+        document.getElementById('addButton').addEventListener('click', function() {
+            // Create a new list item element
+            var newItem = document.createElement('li');
+            
+            // Set the text content of the new list item
+            newItem.textContent = 'New Item';
+            
+            // Get the unordered list by its ID
+            var list = document.getElementById('myList');
+            
+            // Append the new list item to the end of the list
+            list.appendChild(newItem);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selector Example</title>
+</head>
+<body>
+    <div id="container">
+        <p class="item">Item 1</p>
+        <p class="item">Item 2</p>
+        <p class="item">Item 3</p>
+    </div>
+
+    <script>
+        // Using querySelector() to select an element by id
+        const container = document.querySelector('#container');
+        console.log(container); // output -->  <div id="container">...</div>
+
+        // Using querySelectorAll() to select all elements with the class 'item'
+        const items = document.querySelectorAll('.item');
+        items.forEach(item => console.log(item.textContent));
+        // output:
+        // Item 1
+        // Item 2
+        // Item 3
+    </script>
+</body>
+</html>
